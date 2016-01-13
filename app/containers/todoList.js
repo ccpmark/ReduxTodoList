@@ -6,6 +6,7 @@ import React, {
   TouchableOpacity,
   Text,
   View,
+  TextInput,
   ListView
 } from 'react-native';
 import Todo from '../components/todo'
@@ -13,10 +14,17 @@ import {connect} from 'react-redux/native'
 import * as todoActions from '../actions/creators/todoCreator'
 
 class TodoList extends Component {
+  constructor() {
+    super();
+    this.state = {text: ''};
+  }
+  componentDidMount() {
 
-  addTodo() {
+  }
+
+  addTodo(text) {
     var {dispatch} = this.props;
-    dispatch(todoActions.addTodo('new todo'))
+    dispatch(todoActions.addTodo(text))
   }
 
   render() {
@@ -31,7 +39,7 @@ class TodoList extends Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity
-          onPress={() => this.addTodo()}>
+          onPress={() => this.addTodo('button click')}>
 
           <View style={{width: 150, height: 100, backgroundColor: '#E4F4FA'}}>
             <Text style={styles.button}>Button</Text>
@@ -50,6 +58,15 @@ class TodoList extends Component {
       <Text style={styles.instructions}>
       Shake or press menu button for dev menu
       </Text>
+
+      <TextInput
+        value={this.state.text}
+        placeholder="Enter a new todo"
+        style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+        onChangeText={(text) => {
+          this.setState({text: text})
+        }}
+        onSubmitEditing={() => {this.addTodo(this.state.text)}} />
       </View>
     );
   }

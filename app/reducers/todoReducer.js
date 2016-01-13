@@ -16,7 +16,7 @@ const initialState = {
 export default function todoReducer(state = initialState, action) {
   switch(action.type) {
     case ADD_TODO_ITEM:
-    return {state,
+    return {...state,
       todos: [
         ...state.todos,
         {
@@ -28,7 +28,7 @@ export default function todoReducer(state = initialState, action) {
 
     case MARK_TODO_COMPLETED:
       // remove dat itemToAdd
-      return {state,
+      return {...state,
         todos: [
           ...state.todos.slice(0, action.index),
           {...todos[action.index], completed: true},
