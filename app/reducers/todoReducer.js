@@ -7,10 +7,7 @@ import {
 } from '../actions/types';
 
 const initialState = {
-  todos: [{
-    text: "one todo",
-    completed: false
-  }]
+  todos: []
 }
 
 export default function todoReducer(state = initialState, action) {
@@ -27,11 +24,13 @@ export default function todoReducer(state = initialState, action) {
     }
 
     case MARK_TODO_COMPLETED:
-      // remove dat itemToAdd
       return {...state,
         todos: [
           ...state.todos.slice(0, action.index),
-          {...todos[action.index], completed: true},
+          {
+            ...state.todos[action.index],
+            completed: !state.todos[action.index].completed
+          },
           ...state.todos.slice(action.index + 1)
         ]
       }

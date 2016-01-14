@@ -18,20 +18,30 @@ class TodoList extends Component {
     super();
     this.state = {text: ''};
   }
-  componentDidMount() {
-
-  }
 
   addTodo(text) {
     var {dispatch} = this.props;
-    dispatch(todoActions.addTodo(text))
+    dispatch(todoActions.addTodo(text));
+  }
+
+  markTodoCompleted(index) {
+    var {dispatch} = this.props;
+    dispatch(todoActions.markTodoCompleted(index));
   }
 
   render() {
     var rows = this.props.todoState.todos.map((todoItem, index) => {
       return (
         <View key={index}>
-          <Text>{todoItem.text} {index}</Text>
+          <Todo
+            text={todoItem.text}
+            index={index}
+            completed={todoItem.completed}
+            onClick={() => {
+              console.log(todoItem);
+              this.markTodoCompleted(index);
+            }}
+          />
         </View>
       )
     });
@@ -44,20 +54,9 @@ class TodoList extends Component {
           <View style={{width: 150, height: 100, backgroundColor: '#E4F4FA'}}>
             <Text style={styles.button}>Button</Text>
           </View>
-
         </TouchableOpacity>
 
-      <Text style={styles.welcome}>
-      </Text>
-
       {rows}
-
-      <Text style={styles.instructions}>
-      To get started, edit index.android.js
-      </Text>
-      <Text style={styles.instructions}>
-      Shake or press menu button for dev menu
-      </Text>
 
       <TextInput
         value={this.state.text}
@@ -82,7 +81,7 @@ var styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  welcome: {
+  todoItem: {
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
