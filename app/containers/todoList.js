@@ -38,7 +38,6 @@ class TodoList extends Component {
             index={index}
             completed={todoItem.completed}
             onClick={() => {
-              console.log(todoItem);
               this.markTodoCompleted(index);
             }}
           />
